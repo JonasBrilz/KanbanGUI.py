@@ -1,0 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+.pytest_cache/
+module/__pycache__/
+module/.pytest_cache/
+test/__pycache__/
+test/.pytest_cache/
+
+# IntelliJ Default ignored files
+.idea/
+/shelf/
+/workspace.xml
+
+# Python virtual environment
+.venv/
