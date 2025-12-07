@@ -1,0 +1,25 @@
+[project]
+name = "kanban-gui"
+version = "0.1.0"
+requires-python = ">=3.9"
+dependencies = [
+"certifi",
+"chardet",
+"charset-normalizer",
+"colorama",
+"dnspython",
+"idna",
+"iniconfig",
+"Jinja2",
+"MarkupSafe",
+"packaging",
+"pillow>=11.0.0",
+"pluggy",
+"pymongo",
+"pytest",
+"requests",
+"ttkbootstrap",
+"urllib3",
+]
+
+[tool.uv]
