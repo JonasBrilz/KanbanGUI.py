@@ -41,17 +41,9 @@ class Taskstatus(enum.Enum):
     """
     A task that is ready to be worked on.
     """
-    todo = "To Do"
-    """
-    A task to do (alias for open).
-    """
     active = "Active"
     """
     A task that is currently being worked on.
-    """
-    in_progress = "In Progress"
-    """
-    A task that is in progress (alias for active).
     """
     complete = "Complete"
     """
