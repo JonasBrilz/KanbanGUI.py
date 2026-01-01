@@ -19,7 +19,7 @@ dependencies = [
 "pytest>=9.0.1",
 "requests>=2.32.5",
 "ttkbootstrap>=1.14.2",
-"urllib3>=2.6.0",
+"urllib3>=2.6.2",
 ]
 
 [tool.uv]
