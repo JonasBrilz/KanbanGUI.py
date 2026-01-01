@@ -23,7 +23,7 @@ Prototype CRUD interface for Kanban project management in Python using BSON docu
 2. Install UV: Follow instructions at https://docs.astral.sh/uv/getting-started/installation/
 3. Enter your MongoDB credentials in file `resources/credentials.txt`
 4. Install dependencies using `uv sync`
-5. Run Project using `uv run python module/__main__.py`
+5. Run Project using `uv run --active python -m module`
 6. Start creating Items with the 'Add Item'-Button
 
 ## Tests
@@ -42,7 +42,7 @@ Run the tests locally by following these steps:
 1. [Clone Project](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 2. Install UV: Follow instructions at https://docs.astral.sh/uv/getting-started/installation/
 3. Install dependencies using `uv sync`
-4. Run Tests using `uv run pytest`
+4. Run Tests using `uv run --active pytest`
 
 ## License
 
