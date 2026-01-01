@@ -5,6 +5,7 @@ within a Kanban system.
 - `Tasktype`: An enum class representing the different types of tasks (e.g., Epic, Task, Subtask).
 - `Taskstatus`: An enum class representing the different statuses of tasks (e.g., Draft, Open, Active, Complete, Discarded).
 """
+
 import enum
 
 
@@ -12,6 +13,7 @@ class Tasktype(enum.Enum):
     """
     An enum class representing the different types of tasks in the Kanban system.
     """
+
     epic = "Epic"
     """
     A high-level goal or objective that can be broken down into smaller tasks.
@@ -30,6 +32,7 @@ class Taskstatus(enum.Enum):
     """
     An enum class representing the different statuses of tasks in the Kanban system.
     """
+
     draft = "Draft"
     """
     A task that is still being created or edited.
@@ -38,9 +41,17 @@ class Taskstatus(enum.Enum):
     """
     A task that is ready to be worked on.
     """
+    todo = "To Do"
+    """
+    A task to do (alias for open).
+    """
     active = "Active"
     """
     A task that is currently being worked on.
+    """
+    in_progress = "In Progress"
+    """
+    A task that is in progress (alias for active).
     """
     complete = "Complete"
     """
