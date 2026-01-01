@@ -6,7 +6,8 @@ This file defines the `item` class to represent tasks within the Kanban applicat
 - `deserialize`: A function that deserializes a dictionary representation of a Task object
                  back into a Task object.
 """
-from module.enums import Tasktype, Taskstatus
+
+from .enums import Tasktype, Taskstatus
 
 
 class item:
@@ -17,8 +18,19 @@ class item:
     estimated time, time spent, current status, description, optional parent task,
     and a history of changes.
     """
-    def __init__(self, key, type: Tasktype, creation, estimate, time_spent, status: Taskstatus, description, parent,
-                 history) -> None:
+
+    def __init__(
+        self,
+        key,
+        type: Tasktype,
+        creation,
+        estimate,
+        time_spent,
+        status: Taskstatus,
+        description,
+        parent,
+        history,
+    ) -> None:
         """
         This method initializes a new Task object.
 
@@ -54,15 +66,15 @@ class item:
             return False
 
         return (
-                self.key == other.key and
-                self.type == other.type and
-                self.creation == other.creation and
-                self.estimate == other.estimate and
-                self.time_spent == other.time_spent and
-                self.status == other.status and
-                self.description == other.description and
-                self.parent == other.parent and
-                self.history == other.history
+            self.key == other.key
+            and self.type == other.type
+            and self.creation == other.creation
+            and self.estimate == other.estimate
+            and self.time_spent == other.time_spent
+            and self.status == other.status
+            and self.description == other.description
+            and self.parent == other.parent
+            and self.history == other.history
         )
 
     def insertDict(self) -> dict[str, str]:
@@ -81,7 +93,7 @@ class item:
             "status": f"{self.status}",
             "description": f"{self.description}",
             "parent": f"{self.parent}",
-            "history": self.history
+            "history": self.history,
         }
 
     def updateDict(self) -> dict:
@@ -97,7 +109,7 @@ class item:
             "status": f"{self.status}",
             "description": f"{self.description}",
             "parent": f"{self.parent}",
-            "history": self.history
+            "history": self.history,
         }
 
 
@@ -110,12 +122,14 @@ def deserialize(doc: dict) -> item:
 
     :return: A Task object created from the provided dictionary.
     """
-    return item(doc["key"],
-                doc["type"],
-                doc["creation"],
-                doc["estimate"],
-                doc["time_spent"],
-                doc["status"],
-                doc["description"],
-                doc["parent"],
-                doc["history"])
+    return item(
+        doc["key"],
+        doc["type"],
+        doc["creation"],
+        doc["estimate"],
+        doc["time_spent"],
+        doc["status"],
+        doc["description"],
+        doc["parent"],
+        doc["history"],
+    )

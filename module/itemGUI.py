@@ -11,6 +11,7 @@ using the `db.Wrapper` class and utilizes helper functions from `itemUtil`.
 - `refresh`: Refreshes the Kanban board display by reading items with different statuses from the database.
 - `bootstyleFromType`: Returns the appropriate ttkbootstrap style based on the task type.
 """
+
 import datetime
 import tkinter as tk
 from os import path
@@ -19,8 +20,8 @@ from ttkbootstrap.dialogs import Messagebox
 
 import ttkbootstrap as tb
 
-from module import db, enums, itemUtil
-from module.persistence import item
+from . import db, enums, itemUtil
+from .persistence import item
 
 
 def editItem(root, current: item, button) -> None:
@@ -38,22 +39,51 @@ def editItem(root, current: item, button) -> None:
     childWindow.position_center()
 
     keyLabel = itemUtil.labelPair(childWindow, 0, labelText="Key", fillText=current.key)
-    typeLabel = itemUtil.comboPair(childWindow, 1, labelText="Type", options=itemUtil.tasktypes(),
-                                   preset_value=current.type)
-    creationLabel = itemUtil.labelPair(childWindow, 2, labelText="Creation", fillText=current.creation)
-    estimateLabel = itemUtil.labelPair(childWindow, 3, labelText="Estimate", fillText=current.estimate)
-    spentLabel = itemUtil.entryPair(childWindow, 4, labelText="Time Spent", fillText=current.time_spent)
-    statusLabel = itemUtil.comboPair(childWindow, 5, labelText="Status", options=itemUtil.taskstates(),
-                                     preset_value=current.status)
-    parentLabel = itemUtil.entryPair(childWindow, 6, labelText="Parent", fillText=current.parent)
-    descLabel = itemUtil.entryText(childWindow, 7, labelText="Description", fillText=current.description)
+    typeLabel = itemUtil.comboPair(
+        childWindow,
+        1,
+        labelText="Type",
+        options=itemUtil.tasktypes(),
+        preset_value=current.type,
+    )
+    creationLabel = itemUtil.labelPair(
+        childWindow, 2, labelText="Creation", fillText=current.creation
+    )
+    estimateLabel = itemUtil.labelPair(
+        childWindow, 3, labelText="Estimate", fillText=current.estimate
+    )
+    spentLabel = itemUtil.entryPair(
+        childWindow, 4, labelText="Time Spent", fillText=current.time_spent
+    )
+    statusLabel = itemUtil.comboPair(
+        childWindow,
+        5,
+        labelText="Status",
+        options=itemUtil.taskstates(),
+        preset_value=current.status,
+    )
+    parentLabel = itemUtil.entryPair(
+        childWindow, 6, labelText="Parent", fillText=current.parent
+    )
+    descLabel = itemUtil.entryText(
+        childWindow, 7, labelText="Description", fillText=current.description
+    )
 
     def update():
         """
         Updates the current item in the database with the modified values.
         """
-        var = item(current.key, typeLabel.get(), current.creation, current.estimate, spentLabel.get(),
-                   statusLabel.get(), descLabel.get("1.0", "end"), parentLabel.get(), [])
+        var = item(
+            current.key,
+            typeLabel.get(),
+            current.creation,
+            current.estimate,
+            spentLabel.get(),
+            statusLabel.get(),
+            descLabel.get("1.0", "end"),
+            parentLabel.get(),
+            [],
+        )
         connection = db.Wrapper()
         if connection.updateItem(var):
             Messagebox.ok("Item inserted", "Success")
@@ -63,9 +93,15 @@ def editItem(root, current: item, button) -> None:
         button.destroy()
         refresh(root)
 
-    tb.Button(childWindow, text="Cancel", command=lambda: childWindow.destroy(), style="warning-outline").grid(row=8,
-                                                                                                               column=0)
-    tb.Button(childWindow, text="Confirm", command=lambda: update(), style="success-outline").grid(row=8, column=1)
+    tb.Button(
+        childWindow,
+        text="Cancel",
+        command=lambda: childWindow.destroy(),
+        style="warning-outline",
+    ).grid(row=8, column=0)
+    tb.Button(
+        childWindow, text="Confirm", command=lambda: update(), style="success-outline"
+    ).grid(row=8, column=1)
 
 
 def createItem(root):
@@ -81,7 +117,13 @@ def createItem(root):
     childWindow.position_center()
 
     keyLabel = itemUtil.entryPair(childWindow, 0, "Key")
-    typeLabel = itemUtil.comboPair(childWindow, 1, "Type", itemUtil.tasktypes(), preset_value=enums.Tasktype.task.value)
+    typeLabel = itemUtil.comboPair(
+        childWindow,
+        1,
+        "Type",
+        itemUtil.tasktypes(),
+        preset_value=enums.Tasktype.task.value,
+    )
     estimateLabel = itemUtil.entryPair(childWindow, 3, "Estimate")
     parentLabel = itemUtil.entryPair(childWindow, 2, "Parent")
     descLabel = itemUtil.entryText(childWindow, 4, "Description")
@@ -90,15 +132,29 @@ def createItem(root):
         """
         Inserts the new item into the database.
         """
-        var = item(keyLabel.get(), typeLabel.get(), datetime.datetime.now().strftime("%Y-%m-%d-%H-%M"),
-                   estimateLabel.get(), 0,
-                   enums.Taskstatus.draft.value, descLabel.get("1.0", "end"), parentLabel.get(), [])
+        var = item(
+            keyLabel.get(),
+            typeLabel.get(),
+            datetime.datetime.now().strftime("%Y-%m-%d-%H-%M"),
+            estimateLabel.get(),
+            0,
+            enums.Taskstatus.draft.value,
+            descLabel.get("1.0", "end"),
+            parentLabel.get(),
+            [],
+        )
         connection = db.Wrapper()
         connection.insertItem(var)
 
-    tb.Button(childWindow, text="Cancel", command=lambda: childWindow.destroy(), style="warning-outline").grid(row=5,
-                                                                                                               column=0)
-    tb.Button(childWindow, text="Insert", command=lambda: insert(), style="success-outline").grid(row=5, column=1)
+    tb.Button(
+        childWindow,
+        text="Cancel",
+        command=lambda: childWindow.destroy(),
+        style="warning-outline",
+    ).grid(row=5, column=0)
+    tb.Button(
+        childWindow, text="Insert", command=lambda: insert(), style="success-outline"
+    ).grid(row=5, column=1)
 
 
 def listItems(root):
@@ -117,7 +173,9 @@ def listItems(root):
     items = db.Wrapper().readAll()
 
     # Create the listbox widget
-    listbox = tk.Listbox(childWindow, selectmode=tk.SINGLE, width=220)  # Enable single selection
+    listbox = tk.Listbox(
+        childWindow, selectmode=tk.SINGLE, width=220
+    )  # Enable single selection
     listbox.pack()
 
     # Add items to the listbox from the list
@@ -171,7 +229,7 @@ def refresh(root: tk.Frame) -> None:
     discardedItems = connection.readStatus(enums.Taskstatus.discarded)
 
     for widget in root.grid_slaves():
-        if widget.grid_info()['row'] > 2:
+        if widget.grid_info()["row"] > 2:
             widget.destroy()
 
     populateColumn(root, draftItems, 3, 0)
@@ -188,4 +246,10 @@ def bootstyleFromType(currentType: enums.Tasktype) -> str:
     :param currentType: The task type.
     :return: The Bootstyle.
     """
-    return "success" if currentType == enums.Tasktype.epic.value else "info" if currentType == enums.Tasktype.task.value else "light"
+    return (
+        "success"
+        if currentType == enums.Tasktype.epic.value
+        else "info"
+        if currentType == enums.Tasktype.task.value
+        else "light"
+    )

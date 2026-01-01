@@ -11,9 +11,10 @@ and status options for use in comboboxes and other selections.
 - 'comboPair': Creates a label-combobox pair for selecting from options.
 - 'datePair': Creates a label-date entry pair for selecting a date.
 """
+
 import ttkbootstrap as tb
 
-import module.enums
+from . import enums
 
 
 def tasktypes() -> list[str]:
@@ -26,7 +27,7 @@ def tasktypes() -> list[str]:
 
     :return: A list containing all task type options as strings.
     """
-    return [member.value for member in module.enums.Tasktype]
+    return [member.value for member in enums.Tasktype]
 
 
 def taskstates() -> list[str]:
@@ -39,7 +40,7 @@ def taskstates() -> list[str]:
 
     :return: A list containing all task state options as strings.
     """
-    return [member.value for member in module.enums.Taskstatus]
+    return [member.value for member in enums.Taskstatus]
 
 
 def entryPair(root: tb.Frame, r: int, labelText: str, fillText: str = "") -> tb.Entry:
@@ -132,7 +133,7 @@ def comboPair(root, r, labelText, options, preset_value=None) -> tb.Combobox:
     :return: The created combobox widget.
     """
     label = tb.Label(root, text=labelText + ": ")
-    combo = tb.Combobox(root, values=options, state='readonly')
+    combo = tb.Combobox(root, values=options, state="readonly")
     if preset_value:
         combo.current(options.index(preset_value))
 

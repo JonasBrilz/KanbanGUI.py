@@ -12,12 +12,14 @@ from pymongo.mongo_client import MongoClient
 from ttkbootstrap.dialogs import Messagebox
 import os.path
 
-import module.enums as enums
-from module.persistence import item, deserialize
+from . import enums
+from .persistence import item, deserialize
 
 
 class Wrapper:
-    def __init__(self, uri: str = None, dbcontext: str = None, collection: str = None) -> None:
+    def __init__(
+        self, uri: str = None, dbcontext: str = None, collection: str = None
+    ) -> None:
         """
         Initializes the Wrapper class with the given MongoDB URI, database context, and collection.
 
@@ -35,13 +37,14 @@ class Wrapper:
             self.dbcontext = dbcontext
             self.collection = collection
 
-        self.client = MongoClient(self.uri,
-                                  connect=True,
-                                  maxPoolSize=5,  # Maximum connections in the pool
-                                  minPoolSize=0,  # Minimum connections when idle
-                                  appname="KanbanGUI.py",
-                                  connectTimeoutMS=5000  # Timeout for establishing connections
-                                  )
+        self.client = MongoClient(
+            self.uri,
+            connect=True,
+            maxPoolSize=5,  # Maximum connections in the pool
+            minPoolSize=0,  # Minimum connections when idle
+            appname="KanbanGUI.py",
+            connectTimeoutMS=5000,  # Timeout for establishing connections
+        )
         db = self.client[self.dbcontext]
         self.connection = db[self.collection]
 
@@ -126,20 +129,20 @@ def deserializeMultiple(documents: dict) -> list[item]:
 
 def readCredentials(filename):
     """
-  Reads pymongo credentials from a text file.
+    Reads pymongo credentials from a text file.
 
-  :param filename: filename The path to the file containing credentials.
+    :param filename: filename The path to the file containing credentials.
 
-  :return: A dictionary containing pymongo connection details.
+    :return: A dictionary containing pymongo connection details.
 
-  :raises FileNotFoundError: If the specified file is not found.
-  """
+    :raises FileNotFoundError: If the specified file is not found.
+    """
     try:
-        with open(os.path.dirname(__file__) + '/../' + filename, 'r') as f:
+        with open(os.path.dirname(__file__) + "/../" + filename, "r") as f:
             lines = f.readlines()
             credentials = {}
             for line in lines:
-                key, value = line.strip().split('=')
+                key, value = line.strip().split("=")
                 credentials[key] = value
             return credentials
     except FileNotFoundError:

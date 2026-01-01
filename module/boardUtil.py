@@ -15,12 +15,13 @@ The buttons created include:
 Additionally, helper functions `openFromProjectRoot` and `openURL` are defined to handle file opening and URL launching,
 respectively. These functions raise `FileNotFoundError` if the specified file is not found.
 """
+
 import os
 import webbrowser
 
 import ttkbootstrap as tb
 
-from module import itemGUI
+from . import itemGUI
 
 
 def listButton(root: tb.Frame, container: tb.Frame, r: int, c: int) -> tb.Button:
@@ -34,12 +35,19 @@ def listButton(root: tb.Frame, container: tb.Frame, r: int, c: int) -> tb.Button
 
     :return: ttkbootstrap.Button to list all items.
     """
-    button = tb.Button(root, text="List All", command=lambda: itemGUI.listItems(container), style="KanbanGUI.TButton")
+    button = tb.Button(
+        root,
+        text="List All",
+        command=lambda: itemGUI.listItems(container),
+        style="KanbanGUI.TButton",
+    )
     button.grid(row=r, column=c, ipady=15, ipadx=15, pady=5, padx=5)
     return button
 
 
-def fileButton(root: tb.Frame, r: int, c: int, labelText: str, fileName: str) -> tb.Button:
+def fileButton(
+    root: tb.Frame, r: int, c: int, labelText: str, fileName: str
+) -> tb.Button:
     """
     Creates a button to open a file from the project root.
 
@@ -51,12 +59,19 @@ def fileButton(root: tb.Frame, r: int, c: int, labelText: str, fileName: str) ->
 
     :return: ttkbootstrap.Button to open file under given path from project root.
     """
-    Button = tb.Button(root, text=labelText, command=lambda: openFromResources(fileName), style="KanbanGUI.TButton")
+    Button = tb.Button(
+        root,
+        text=labelText,
+        command=lambda: openFromResources(fileName),
+        style="KanbanGUI.TButton",
+    )
     Button.grid(row=r, column=c, ipady=15, ipadx=15, pady=5, padx=5)
     return Button
 
 
-def websiteButton(root: tb.Frame, r: int, c: int, labelText: str, url: str) -> tb.Button:
+def websiteButton(
+    root: tb.Frame, r: int, c: int, labelText: str, url: str
+) -> tb.Button:
     """
     Creates a button to open a URL in default browser.
 
@@ -68,7 +83,9 @@ def websiteButton(root: tb.Frame, r: int, c: int, labelText: str, url: str) -> t
 
     :return: ttkbootstrap.Button to open given URL in default browser.
     """
-    Button = tb.Button(root, text=labelText, command=lambda: openURL(url), style="KanbanGUI.TButton")
+    Button = tb.Button(
+        root, text=labelText, command=lambda: openURL(url), style="KanbanGUI.TButton"
+    )
     Button.grid(row=r, column=c, ipady=15, ipadx=15, pady=5, padx=5)
     return Button
 
@@ -84,7 +101,12 @@ def creationButton(root: tb.Frame, container: tb.Frame, r: int, c: int) -> tb.Bu
 
     :return: ttkbootstrap.Button to create a new item.
     """
-    Button = tb.Button(root, text="Add Item", command=lambda: itemGUI.createItem(container), style="KanbanGUI.TButton")
+    Button = tb.Button(
+        root,
+        text="Add Item",
+        command=lambda: itemGUI.createItem(container),
+        style="KanbanGUI.TButton",
+    )
     Button.grid(row=r, column=c, ipady=15, ipadx=15, pady=5, padx=5)
     return Button
 
@@ -97,19 +119,19 @@ def openFromResources(fileName: str) -> None:
 
     :raises FileNotFoundError: If the file is not found.
     """
-    path = os.path.dirname(__file__) + '/../' + fileName
+    path = os.path.dirname(__file__) + "/../" + fileName
 
     if os.path.isfile(path):  # Check if the file exists
         webbrowser.open_new(path)  # Open in browser
     else:
-        #raise FileNotFoundError(f"File not found: {path}")
+        # raise FileNotFoundError(f"File not found: {path}")
         raise FileNotFoundError(f"File not found: {fileName}")
 
 
 def openURL(url: str) -> None:
     """
     Opens given URL in default Browser
-    
+
     :param url: The relative path to the file from the project root.
     :type url: str
     """
@@ -126,7 +148,12 @@ def refreshButton(root: tb.Window, r: int, c: int) -> tb.Button:
 
     :return: The refresh button.
     """
-    tb.Style().configure(foreground='#00f000', style="refresh.TButton", font=("", 20))
-    Button = tb.Button(root, text="Refresh", command=lambda: itemGUI.refresh(root), style="refresh.TButton")
+    tb.Style().configure(foreground="#00f000", style="refresh.TButton", font=("", 20))
+    Button = tb.Button(
+        root,
+        text="Refresh",
+        command=lambda: itemGUI.refresh(root),
+        style="refresh.TButton",
+    )
     Button.grid(row=r, column=c, ipady=15, ipadx=15, pady=5, padx=5)
     return Button
